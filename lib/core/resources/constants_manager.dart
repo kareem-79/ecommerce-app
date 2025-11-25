@@ -62,3 +62,7 @@ abstract class ApiConstant{
   static const String registerEndpoint='auth/signup';
   static const String loginEndpoint='auth/signin';
 }
+abstract class CachedConstant{
+  static const String tokenKey='token';
+
+}

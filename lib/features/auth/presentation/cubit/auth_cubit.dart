@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ecommerce_app/features/auth/data/models/LoginRequest.dart';
 import 'package:ecommerce_app/features/auth/data/models/RegisterRequest.dart';
 import 'package:ecommerce_app/features/auth/repositories/auth_repository.dart';
@@ -10,25 +8,23 @@ class AuthCubit extends Cubit<AuthState> {
   AuthRepository authRepository;
 
   void register(RegisterRequest request) async {
-    try {
-      emit(RegisterLoading());
-      var response = await authRepository.register(request);
+    emit(RegisterLoading());
+    var result = await authRepository.register(request);
+    result.fold((failure) {
+      emit(RegisterError(massage: failure.message));
+    }, (user) {
       emit(RegisterSuccess());
-    } catch (e) {
-      emit(RegisterError(massage: e.toString()));
-      log("$e");
-    }
+    });
   }
 
-  void login(LoginRequest request)async {
-    try {
-      emit(LoginLoading());
-      var response = await authRepository.login(request);
+  void login(LoginRequest request) async {
+    emit(LoginLoading());
+    var result = await authRepository.login(request);
+    result.fold((failure) {
+      emit(LoginError(massage: failure.message));
+    }, (user) {
       emit(LoginSuccess());
-    } catch (e) {
-      emit(LoginError(massage: e.toString()));
-      log("$e");
-    }
+    });
   }
 }
 
