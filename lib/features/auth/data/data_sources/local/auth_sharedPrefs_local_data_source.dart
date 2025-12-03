@@ -1,9 +1,10 @@
 import 'package:ecommerce_app/core/errors/app_exception.dart';
 import 'package:ecommerce_app/core/resources/constants_manager.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_local_data_source.dart';
-
+@Singleton(as: AuthLocalDataSource)
 class AuthSharedprefsLocalDataSource implements AuthLocalDataSource {
   @override
   Future<void> saveToken(String token) async {

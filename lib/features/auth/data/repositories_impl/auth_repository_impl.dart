@@ -7,7 +7,8 @@ import 'package:ecommerce_app/features/auth/data/models/LoginRequest.dart';
 import 'package:ecommerce_app/features/auth/data/models/RegisterRequest.dart';
 import 'package:ecommerce_app/features/auth/data/models/User.dart';
 import 'package:ecommerce_app/features/auth/repositories/auth_repository.dart';
-
+import 'package:injectable/injectable.dart';
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRemoteDataSource authApiRemoteDataSource;
   AuthLocalDataSource authLocalDataSource;

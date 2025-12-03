@@ -2,7 +2,9 @@ import 'package:ecommerce_app/features/auth/data/models/LoginRequest.dart';
 import 'package:ecommerce_app/features/auth/data/models/RegisterRequest.dart';
 import 'package:ecommerce_app/features/auth/repositories/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.authRepository}) : super(InitState());
   AuthRepository authRepository;
