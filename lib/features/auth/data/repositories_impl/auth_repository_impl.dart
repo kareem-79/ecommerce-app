@@ -5,9 +5,10 @@ import 'package:ecommerce_app/features/auth/data/data_sources/local/auth_local_d
 import 'package:ecommerce_app/features/auth/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:ecommerce_app/features/auth/data/models/LoginRequest.dart';
 import 'package:ecommerce_app/features/auth/data/models/RegisterRequest.dart';
-import 'package:ecommerce_app/features/auth/data/models/User.dart';
-import 'package:ecommerce_app/features/auth/repositories/auth_repository.dart';
+import 'package:ecommerce_app/features/auth/domain/entities/user_entity.dart';
 import 'package:injectable/injectable.dart';
+import '../../domain/repositories/auth_repository.dart';
+
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRemoteDataSource authApiRemoteDataSource;
@@ -18,22 +19,22 @@ class AuthRepositoryImpl implements AuthRepository {
       required this.authLocalDataSource});
 
   @override
-  Future<Either<Failure, User>> register(RegisterRequest request) async {
+  Future<Either<Failure, UserEntity>> register(RegisterRequest request) async {
     try {
       final response = await authApiRemoteDataSource.register(request);
       await authLocalDataSource.saveToken(response.token);
-      return Right(response.user);
+      return Right(response.user.toUserEntity());
     } on AppException catch (exception) {
       return Left(Failure(message: exception.message));
     }
   }
 
   @override
-  Future<Either<Failure, User>> login(LoginRequest request)async {
+  Future<Either<Failure, UserEntity>> login(LoginRequest request) async {
     try {
       final response = await authApiRemoteDataSource.login(request);
       await authLocalDataSource.saveToken(response.token);
-      return Right(response.user);
+      return Right(response.user.toUserEntity());
     } on AppException catch (exception) {
       return Left(Failure(message: exception.message));
     }

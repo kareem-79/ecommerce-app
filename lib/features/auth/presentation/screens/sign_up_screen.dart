@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ecommerce_app/core/Utils/ui_utils.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/custom_elevated_button.dart';
