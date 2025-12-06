@@ -3,9 +3,11 @@ import 'package:ecommerce_app/core/errors/failure.dart';
 import 'package:ecommerce_app/features/main_layout/home/data/data_source/remote/brand_remote_data_source.dart';
 import 'package:ecommerce_app/features/main_layout/home/domain/entities/brand_entity.dart';
 import 'package:ecommerce_app/features/main_layout/home/domain/repositories/brands_repositories.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../../core/errors/app_exception.dart';
 
+@LazySingleton(as: BrandsRepositories)
 class BrandsRepositoriesImpl implements BrandsRepositories {
   BrandRemoteDataSource brandRemoteDataSource;
 

@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/features/main_layout/home/domain/use_cases/get_categories_ise_case.dart';
+import 'package:ecommerce_app/features/main_layout/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
