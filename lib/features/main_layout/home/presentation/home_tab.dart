@@ -72,7 +72,7 @@ class _HomeTabState extends State<HomeTab> {
             ),
             Column(
               children: [
-                CustomSectionBar(sectionNname: 'Categories', function: () {}),
+                CustomSectionBar(sectionName: 'Categories', function: () {}),
                 BlocBuilder<CategoriesCubit, CategoriesState>(
                   builder: (context, state) {
                     if (state is CategoriesLoading) {
@@ -109,7 +109,7 @@ class _HomeTabState extends State<HomeTab> {
                   },
                 ),
                 SizedBox(height: 12.h),
-                CustomSectionBar(sectionNname: 'Brands', function: () {}),
+                CustomSectionBar(sectionName: 'Brands', function: () {}),
                 BlocBuilder<BrandsCubit, BrandsState>(
                   builder: (context, state) {
                     if (state is BrandsLoading) {

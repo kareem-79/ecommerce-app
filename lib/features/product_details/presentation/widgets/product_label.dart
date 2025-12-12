@@ -9,19 +9,27 @@ final String productName;
 final String productPrice;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Expanded(
-            child: Text(
-             productName,
+        Row(
+          children: [
+            Expanded(
+                child: Text(
+                 productName,
+                  style: getMediumStyle(color: ColorManager.primary)
+                      .copyWith(fontSize: 18.sp),
+                )),
+          ],
+        ),
+        SizedBox(height: 5.h,),
+        Row(
+          children: [
+            Text(
+              productPrice,
               style: getMediumStyle(color: ColorManager.primary)
                   .copyWith(fontSize: 18.sp),
-            )),
-        Text(
-          productPrice,
-          style: getMediumStyle(color: ColorManager.primary)
-              .copyWith(fontSize: 18.sp),
+            ),
+          ],
         ),
       ],
     );

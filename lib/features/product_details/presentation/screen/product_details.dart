@@ -4,16 +4,25 @@ import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/widget/custom_elevated_button.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_color.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_description.dart';
-import 'package:ecommerce_app/features/product_details/presentation/widgets/product_item.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_label.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_rating.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_size.dart';
 import 'package:ecommerce_app/features/product_details/presentation/widgets/product_slider.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+class ProductDetails extends StatefulWidget {
+  ProductDetails({super.key, required this.product});
+
+  final ProductEntity product;
+
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -45,38 +54,43 @@ class ProductDetails extends StatelessWidget {
           padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 50.h),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const ProductSlider(items: [
-              ProductItem(
-                imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
-              ),
-              ProductItem(
-                imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
-              ),
-              ProductItem(
-                imageUrl:
-                    "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
-              )
-            ], initialIndex: 0),
+            ProductSlider(items: widget.product.images!, initialIndex: 0),
             SizedBox(
               height: 24.h,
             ),
-            const ProductLabel(
-                productName: 'Nike Air Jordon', productPrice: 'EGP 3,500'),
+            ProductLabel(
+                productName: widget.product.title,
+                productPrice:
+                    'EGP ${widget.product.priceAfterDiscount ?? widget.product.price}'),
             SizedBox(
               height: 16.h,
             ),
-            const ProductRating(
-                productBuyers: '3,230', productRating: '4.8 (7,500)'),
+            ProductRating(
+              productBuyers: '${widget.product.sold}',
+              productRating:
+                  '${widget.product.ratingsAverage} (${widget.product.ratingsQuantity})',
+              increment: (int) {
+                quantity++;
+                setState(() {});
+              },
+              decrement: (int) {
+                if (quantity <= 1) {
+                  quantity = 1;
+                } else {
+                  quantity--;
+                }
+                setState(() {});
+              },
+              quantity: quantity,
+            ),
             SizedBox(
               height: 16.h,
             ),
-            const ProductDescription(
-                productDescription:
-                    'Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories'),
+            ProductDescription(
+              productDescription: widget.product.description,
+            ),
             ProductSize(
-              size: const [35, 38, 39, 40],
+              size: [35, 38, 39, 40],
               onSelected: () {},
             ),
             SizedBox(
@@ -107,7 +121,8 @@ class ProductDetails extends StatelessWidget {
                     SizedBox(
                       height: 12.h,
                     ),
-                    Text('EGP 3,500',
+                    Text(
+                        'EGP ${widget.product.priceAfterDiscount ?? widget.product.price * quantity}',
                         style:
                             getMediumStyle(color: ColorManager.appBarTitleColor)
                                 .copyWith(fontSize: 18.sp))

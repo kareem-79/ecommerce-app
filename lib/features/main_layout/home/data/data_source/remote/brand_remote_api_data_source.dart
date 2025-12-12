@@ -20,7 +20,7 @@ class BrandRemoteApiDataSource implements BrandRemoteDataSource {
       if (exception is DioException) {
         message = exception.response?.data['message'];
       }
-      throw RemoteException(message: message ?? 'Something went wrong');
+      throw RemoteException(message: message ?? 'Failed to get brands');
     }
   }
 }

@@ -5,11 +5,25 @@ import 'package:ecommerce_app/core/widget/product_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductRating extends StatelessWidget {
+class ProductRating extends StatefulWidget {
   final String productBuyers;
   final String productRating;
-  const ProductRating({super.key , required this.productBuyers , required this.productRating});
+  final void Function(int) increment;
+  final void Function(int) decrement;
+  int quantity;
 
+  ProductRating(
+      {super.key,
+      required this.productBuyers,
+      required this.productRating,
+      required this.increment,
+      required this.decrement,required this.quantity});
+
+  @override
+  State<ProductRating> createState() => _ProductRatingState();
+}
+
+class _ProductRatingState extends State<ProductRating> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,14 +32,12 @@ class ProductRating extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             border: Border.all(
-                color: ColorManager.primary.withOpacity(.3),
-                width: 1),
+                color: ColorManager.primary.withOpacity(.3), width: 1),
             borderRadius: BorderRadius.circular(20.r),
           ),
-          padding:
-          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: Text(
-            '$productBuyers Sold',
+            '${widget.productBuyers} Sold',
             overflow: TextOverflow.ellipsis,
             style: getMediumStyle(color: ColorManager.primary)
                 .copyWith(fontSize: 18.sp),
@@ -43,14 +55,16 @@ class ProductRating extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            productRating,
+            widget.productRating,
             overflow: TextOverflow.ellipsis,
-            style:
-            getMediumStyle(color: ColorManager.appBarTitleColor)
+            style: getMediumStyle(color: ColorManager.appBarTitleColor)
                 .copyWith(fontSize: 14.sp),
           ),
         ),
-        ProductCounter(add: (_) {}, remove: (_) {}, productCounter: 1)
+        ProductCounter(
+            add: widget.increment,
+            remove: widget.decrement,
+            productCounter: widget.quantity)
       ],
     );
   }
