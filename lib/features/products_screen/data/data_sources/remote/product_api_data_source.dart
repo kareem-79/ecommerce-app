@@ -25,7 +25,7 @@ class ProductApiDataSource implements ProductRemoteDataSource {
         message = exception.response?.data['message'];
       }
 
-      throw RemoteException(message: exception.toString());
+      throw RemoteException(message: message??"Failed to get products");
     }
   }
 }
