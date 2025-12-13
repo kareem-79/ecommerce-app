@@ -41,6 +41,7 @@ class _ProductRatingState extends State<ProductRating> {
             overflow: TextOverflow.ellipsis,
             style: getMediumStyle(color: ColorManager.primary)
                 .copyWith(fontSize: 18.sp),
+            maxLines: 1,
           ),
         ),
         SizedBox(
@@ -48,7 +49,7 @@ class _ProductRatingState extends State<ProductRating> {
         ),
         Image.asset(
           ImageAssets.rate,
-          width: 30.w,
+          width: 20.w,
         ),
         SizedBox(
           width: 4.w,
